@@ -1,9 +1,9 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import Webcam from 'react-webcam';
 import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import '@tensorflow/tfjs-backend-webgl';
-import { Activity, Play, RotateCcw, Trophy, Info, AlertCircle, CheckCircle2, XCircle } from 'lucide-react';
+import { Activity, Play, RotateCcw, Info, AlertCircle, CheckCircle2, XCircle } from 'lucide-react';
 
 // Types for our precision logic
 type ExerciseState = 'UP' | 'DOWN' | 'HOLDING';
@@ -24,7 +24,6 @@ const PhysioBot = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [repCount, setRepCount] = useState(0);
   const [feedback, setFeedback] = useState("Ready to start?");
-  const [exerciseState, setExerciseState] = useState<ExerciseState>('DOWN');
   const [isLoading, setIsLoading] = useState(true);
   const [detector, setDetector] = useState<poseDetection.PoseDetector | null>(null);
   const [activeArm, setActiveArm] = useState<Arm>('left');

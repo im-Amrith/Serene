@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Mic, Activity, AlertCircle, CheckCircle, Play, Square, Stethoscope, ArrowRight } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Mic, Activity, AlertCircle, CheckCircle, Stethoscope, ArrowRight } from 'lucide-react';
 import { callGroq, GroqMessage } from '../lib/groq';
 
 type ScanResult = {

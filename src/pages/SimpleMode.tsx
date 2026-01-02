@@ -1,4 +1,3 @@
-import React from 'react';
 import { Pill, Phone, X } from 'lucide-react';
 import { useAccessibility } from '../context/AccessibilityContext';
 

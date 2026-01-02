@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Camera, Upload, X, AlertTriangle, CheckCircle, Scan } from 'lucide-react';
+import { Camera, X, Scan } from 'lucide-react';
 
 interface DermScannerProps {
   onClose: () => void;

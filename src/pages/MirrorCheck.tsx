@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Webcam from 'react-webcam';
 import { LineChart, Line, YAxis, ResponsiveContainer } from 'recharts';
 import { Activity, Heart, Wind, Droplets, Play, RefreshCw, AlertCircle, Loader2 } from 'lucide-react';

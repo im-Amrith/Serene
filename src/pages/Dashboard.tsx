@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Activity, Heart, Shield, Zap, Calendar, Bell, Play, CheckCircle, Clock } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Activity, Heart, Shield, Zap, Calendar, Bell, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { GamificationService, HealthStats, PetState } from '../services/gamificationService';
 import { HealthMascot } from '../components/HealthMascot';
@@ -11,7 +11,6 @@ import { db } from '../lib/firebase';
 const Dashboard = () => {
   const [stats, setStats] = useState<HealthStats | null>(null);
   const [score, setScore] = useState(0);
-  const [petState, setPetState] = useState<PetState | null>(null);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -29,16 +28,13 @@ const Dashboard = () => {
 
           setStats(userStats);
           setScore(calculatedScore);
-          setPetState(pet);
         } else {
           // Fallback to default if no data found (or maybe trigger seed?)
           const userStats = await GamificationService.getUserStats("demo-user-123");
           const calculatedScore = GamificationService.calculateHealthScore(userStats);
-          const pet = GamificationService.getPetState(calculatedScore);
 
           setStats(userStats);
           setScore(calculatedScore);
-          setPetState(pet);
         }
       } catch (error) {
         console.error("Error fetching dashboard data:", error);

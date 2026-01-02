@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileText, Copy, Check, X, Stethoscope } from 'lucide-react';
+import { Copy, Check, X, Stethoscope } from 'lucide-react';
 import { SOAPNote } from '../services/soapService';
 
 interface DoctorReportCardProps {

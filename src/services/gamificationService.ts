@@ -53,7 +53,7 @@ export class GamificationService {
     };
   }
 
-  public static async getUserStats(userId: string): Promise<HealthStats> {
+  public static async getUserStats(_userId: string): Promise<HealthStats> {
     // Mock data aggregation
     // In a real app, this would query MedicineService, NutritionService, and SymptomService
     return {

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Camera, Scan, Utensils, User, ArrowRight, BookOpen, Leaf, Droplet, Save, Loader2, Upload } from 'lucide-react';
+import { Camera, Scan, Utensils, BookOpen, Leaf, Droplet, Save, Loader2, Upload } from 'lucide-react';
 import { NutritionService } from '../services/nutritionService';
 import { VisionService } from '../services/visionService';
 import { callGroq, GroqMessage } from '../lib/groq';

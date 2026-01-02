@@ -1,4 +1,4 @@
-import { doc, setDoc, collection, writeBatch } from "firebase/firestore";
+import { doc, collection, writeBatch } from "firebase/firestore";
 import { db } from "../lib/firebase";
 
 export const seedUserData = async (uid: string) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MessageSquare, Mic, Image as ImageIcon, MapPin, Send, AlertCircle, Save, Brain, Heart, Stethoscope, Sparkles, FileText, HelpCircle, Scan, Activity } from 'lucide-react';
+import { Mic, Image as ImageIcon, MapPin, Send, Save, Brain, Heart, Stethoscope, Sparkles, FileText, HelpCircle, Scan, Activity } from 'lucide-react';
 import { SymptomService, ChatMessage } from '../services/symptomService';
 import { AgentOrchestrator } from '../ai/AgentSystem';
 import { TrustIndicator } from '../components/TrustIndicator';

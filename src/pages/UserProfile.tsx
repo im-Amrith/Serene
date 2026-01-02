@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Printer, Share, Moon, Wifi, User, Shield, AlertTriangle, Copy, Smartphone, FileText, Check } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { doc, getDoc, setDoc } from 'firebase/firestore';

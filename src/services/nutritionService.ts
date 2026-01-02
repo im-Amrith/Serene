@@ -3,7 +3,6 @@ import {
   addDoc, 
   getDocs, 
   query, 
-  where, 
   orderBy,
   Timestamp 
 } from "firebase/firestore";
@@ -17,8 +16,6 @@ export interface NutritionScan {
   recommendations: string[];
   createdAt: any;
 }
-
-const COLLECTION_NAME = "nutrition_scans";
 
 export const NutritionService = {
   // Save a scan result

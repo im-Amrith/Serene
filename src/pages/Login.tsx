@@ -3,7 +3,6 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { 
   User as UserIcon, 
-  Lock, 
   Eye, 
   EyeOff, 
   Dna, 

@@ -11,7 +11,6 @@ const MedicineManager = () => {
   const [loading, setLoading] = useState(true);
   const [interactions, setInteractions] = useState<Interaction[]>([]);
   const [checkingInteractions, setCheckingInteractions] = useState(false);
-  const [showCamera, setShowCamera] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newMed, setNewMed] = useState<{name: string, dosage: string, time: string, days: string[]}>({ 

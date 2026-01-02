@@ -16,7 +16,6 @@ interface HealthMascotProps {
 
 export const HealthMascot: React.FC<HealthMascotProps> = ({ score }) => {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
-  const [isHovered, setIsHovered] = useState(false);
 
   // Determine mood based on score
   const getMood = () => {
