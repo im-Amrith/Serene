@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import Lottie, { LottieRefCurrentProps } from 'lottie-react';
 import confetti from 'canvas-confetti';
 import { Zap, Heart } from 'lucide-react';
