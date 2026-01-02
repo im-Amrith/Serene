@@ -200,7 +200,6 @@ const PhysioBot = () => {
     if (stateRef.current === 'DOWN') {
       if (angle < 65) {
         stateRef.current = 'UP';
-        setExerciseState('UP');
         setRepCount(prev => prev + 1);
         setFeedback("Great! Squeeze at the top.");
         // Trigger haptic or sound here if possible
@@ -212,7 +211,6 @@ const PhysioBot = () => {
     } else if (stateRef.current === 'UP') {
       if (angle > 140) {
         stateRef.current = 'DOWN';
-        setExerciseState('DOWN');
         setFeedback("Fully extended. Good.");
       } else if (angle > 90) {
         setFeedback("Lower slowly...");

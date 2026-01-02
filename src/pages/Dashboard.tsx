@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Activity, Heart, Shield, Zap, Calendar, Bell, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { GamificationService, HealthStats, PetState } from '../services/gamificationService';
+import { GamificationService, HealthStats } from '../services/gamificationService';
 import { HealthMascot } from '../components/HealthMascot';
 import { HealthScore } from '../components/HealthScore';
 import { useAuth } from '../context/AuthContext';
@@ -24,7 +24,6 @@ const Dashboard = () => {
         if (statsSnap.exists()) {
           const userStats = statsSnap.data() as HealthStats;
           const calculatedScore = GamificationService.calculateHealthScore(userStats);
-          const pet = GamificationService.getPetState(calculatedScore);
 
           setStats(userStats);
           setScore(calculatedScore);

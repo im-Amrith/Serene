@@ -64,8 +64,6 @@ export const HealthMascot: React.FC<HealthMascotProps> = ({ score }) => {
   return (
     <div 
         className="relative h-full min-h-[320px] p-6 pb-20 rounded-3xl bg-white/40 backdrop-blur-xl border border-white/50 shadow-sm flex flex-col items-center justify-center transition-all duration-500 overflow-hidden group"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
     >
       {/* Ambient Background Glow */}
       <div className={`absolute inset-0 opacity-30 blur-3xl transition-colors duration-500 ${mood.bgGlow}`}></div>
