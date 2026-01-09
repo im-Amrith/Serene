@@ -10,7 +10,6 @@ interface DermScannerProps {
 export const DermScanner: React.FC<DermScannerProps> = ({ onClose }) => {
   const [image, setImage] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
-  const [fileName, setFileName] = useState<string>("");
   const [isScanning, setIsScanning] = useState(false);
   const [result, setResult] = useState<{ risk: string; label: string; confidence: number; desc: string } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -19,7 +18,6 @@ export const DermScanner: React.FC<DermScannerProps> = ({ onClose }) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       setFile(selectedFile);
-      setFileName(selectedFile.name.toLowerCase());
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result as string);
