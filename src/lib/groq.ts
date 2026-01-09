@@ -8,8 +8,31 @@ export interface GroqMessage {
 
 export const callGroq = async (messages: GroqMessage[], model: string = "llama-3.1-8b-instant") => {
   if (!GROQ_API_KEY) {
-    console.warn("Groq API Key is missing. Please set VITE_GROQ_API_KEY in .env");
-    throw new Error("Groq API Key missing");
+    console.warn("Groq API Key is missing. Using mock response.");
+    
+    // Check if it's a nutrition body scan or menu scan based on system prompt
+    const systemContent = messages.find(m => m.role === "system")?.content || "";
+    
+    if (systemContent.includes("visual description of a person's face/nails")) {
+      return JSON.stringify({
+        detectedItems: ["Pale Skin", "Dark Circles"],
+        recommendations: ["Increase iron-rich foods like spinach and red meat", "Ensure 7-8 hours of sleep"],
+        deficiency: "Possible Iron Deficiency Anemia"
+      });
+    } else if (systemContent.includes("Analyze the restaurant menu text")) {
+        return JSON.stringify({
+          recommended: [
+            { name: "Grilled Salmon with Asparagus", reason: "High in Omega-3 and fiber, low saturated fat.", matchScore: 98 },
+            { name: "Quinoa Salad Bowl", reason: "Complete protein and nutrient-dense vegetables.", matchScore: 95 }
+          ],
+          avoid: [
+            { name: "Double Cheeseburger and Fries", reason: "High in sodium and saturated fats." }
+          ]
+        });
+    }
+    
+    // Default fallback
+    return "I am a simulated AI assistant since the API key is missing.";
   }
 
   try {

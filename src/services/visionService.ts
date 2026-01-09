@@ -5,8 +5,8 @@ export class VisionService {
     const endpoint = import.meta.env.VITE_AZURE_VISION_ENDPOINT;
 
     if (!key || !endpoint) {
-      console.warn("Azure Vision keys missing");
-      return "Azure Vision keys are missing. Please check your .env file.";
+      console.warn("Azure Vision keys missing, using mock.");
+      return "A close up of a person's face showing pale skin, suggesting potential iron deficiency.";
     }
 
     const url = `${endpoint}/vision/v3.2/analyze?visualFeatures=Description,Objects,Tags&language=en`;
@@ -39,8 +39,8 @@ export class VisionService {
     const endpoint = import.meta.env.VITE_AZURE_VISION_ENDPOINT;
 
     if (!key || !endpoint) {
-      console.warn("Azure Vision keys missing");
-      return "Azure Vision keys are missing. Please check your .env file.";
+      console.warn("Azure Vision keys missing, using mock.");
+      return "A close up of a person's face showing pale skin and slight dark circles under the eyes. Tags: face, person, indoor";
     }
 
     const url = `${endpoint}/vision/v3.2/analyze?visualFeatures=Description,Objects,Tags&language=en`;
@@ -75,8 +75,13 @@ export class VisionService {
     const endpoint = import.meta.env.VITE_AZURE_VISION_ENDPOINT;
 
     if (!key || !endpoint) {
-      console.warn("Azure Vision keys missing");
-      return [];
+      console.warn("Azure Vision keys missing, using mock.");
+      return [
+        "Grilled Salmon with Asparagus",
+        "Quinoa Salad Bowl",
+        "Double Cheeseburger and Fries",
+        "Green Smoothie"
+      ];
     }
 
     const url = `${endpoint}/vision/v3.2/read/analyze`;

@@ -40,7 +40,12 @@ const NutritionAnalyzer = () => {
         ];
 
         const aiResponse = await callGroq(messages);
-        const cleanJson = aiResponse.replace(/```json/g, "").replace(/```/g, "").trim();
+        // Robust JSON extraction: Find the first '{' and last '}'
+        const start = aiResponse.indexOf('{');
+        const end = aiResponse.lastIndexOf('}');
+        if (start === -1 || end === -1) throw new Error("No JSON found in response");
+        
+        const cleanJson = aiResponse.substring(start, end + 1);
         setAnalysisResult(JSON.parse(cleanJson));
 
       } else if (activeTab === 'menu') {
@@ -51,7 +56,7 @@ const NutritionAnalyzer = () => {
         const messages: GroqMessage[] = [
           {
             role: "system",
-            content: "You are a nutrition expert. Analyze the restaurant menu text. Identify the healthiest options. Return a JSON object with: { 'recommended': [{ 'name': 'Dish Name', 'reason': 'Why it is healthy', 'matchScore': 95 }], 'avoid': [{ 'name': 'Dish Name', 'reason': 'Why to avoid' }] }."
+            content: "You are a nutrition expert. Analyze the restaurant menu text. Identify the healthiest options. Return ONLY a JSON object (no markdown, no extra text) with: { 'recommended': [{ 'name': 'Dish Name', 'reason': 'Why it is healthy', 'matchScore': 95 }], 'avoid': [{ 'name': 'Dish Name', 'reason': 'Why to avoid' }] }."
           },
           {
             role: "user",
@@ -60,7 +65,12 @@ const NutritionAnalyzer = () => {
         ];
 
         const aiResponse = await callGroq(messages);
-        const cleanJson = aiResponse.replace(/```json/g, "").replace(/```/g, "").trim();
+        
+        const start = aiResponse.indexOf('{');
+        const end = aiResponse.lastIndexOf('}');
+        if (start === -1 || end === -1) throw new Error("No JSON found in response");
+        
+        const cleanJson = aiResponse.substring(start, end + 1);
         setAnalysisResult(JSON.parse(cleanJson));
       }
     } catch (error) {
