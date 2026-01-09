@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Camera, X, Scan } from 'lucide-react';
+import { VisionService } from '../services/visionService';
+import { callGroq, GroqMessage } from '../lib/groq';
 
 interface DermScannerProps {
   onClose: () => void;
@@ -7,59 +9,70 @@ interface DermScannerProps {
 
 export const DermScanner: React.FC<DermScannerProps> = ({ onClose }) => {
   const [image, setImage] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>("");
   const [isScanning, setIsScanning] = useState(false);
   const [result, setResult] = useState<{ risk: string; label: string; confidence: number; desc: string } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setFileName(file.name.toLowerCase());
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      setFileName(selectedFile.name.toLowerCase());
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result as string);
         setResult(null);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(selectedFile);
     }
   };
 
-  const analyzeSkin = () => {
+  const analyzeSkin = async () => {
+    if (!file) return;
     setIsScanning(true);
-    // Simulate AI Analysis
-    setTimeout(() => {
-      setIsScanning(false);
+    
+    try {
+      // 1. Get visual description from Azure Vision
+      const visualDescription = await VisionService.analyzeImageBinary(file);
       
-      // Expanded Mock Database for Demo
-      const outcomes = [
-        { risk: 'Low Risk', label: 'Benign Nevus', confidence: 94, desc: 'Common mole. No signs of asymmetry or irregularity.' },
-        { risk: 'Medium Risk', label: 'Tinea Corporis (Ringworm)', confidence: 88, desc: 'Fungal infection indicated by ring-shaped lesion. Contagious.' },
-        { risk: 'Low Risk', label: 'Atopic Dermatitis (Eczema)', confidence: 76, desc: 'Inflammatory skin condition. Likely allergic reaction.' },
-        { risk: 'High Risk', label: 'Potential Melanoma', confidence: 82, desc: 'Irregular borders and color variation detected. Immediate biopsy recommended.' }
+      // 2. Send description to Groq (LLM) for dermatological assessment
+      const messages: GroqMessage[] = [
+        {
+          role: "system",
+          content: "You are a dermatologist AI assistant. Analyze the visual description of a skin lesion. Return ONLY a JSON object with: { 'risk': 'Low/Medium/High Risk', 'label': 'Condition Name', 'confidence': 85, 'desc': 'Brief medical description and recommendation.' }."
+        },
+        {
+          role: "user",
+          content: `Visual Description of skin lesion: ${visualDescription}`
+        }
       ];
 
-      // Pseudo-intelligent selection based on image data length
-      // This ensures the same image always gets the same result, but different images get different results.
-      // For the demo, we can tweak this or just use random if preferred, but deterministic feels more "real".
+      const aiResponse = await callGroq(messages);
       
-      let index = 0;
-      
-      // Smart Demo Override: Check filename for keywords to ensure correct demo behavior
-      if (fileName.includes('ring') || fileName.includes('tinea') || fileName.includes('fungal')) {
-        index = 1; // Force Ringworm
-      } else if (fileName.includes('eczema') || fileName.includes('rash') || fileName.includes('derm')) {
-        index = 2; // Force Eczema
-      } else if (fileName.includes('melanoma') || fileName.includes('cancer') || fileName.includes('malignant')) {
-        index = 3; // Force Melanoma
+      // 3. Robust JSON Parsing
+      const start = aiResponse.indexOf('{');
+      const end = aiResponse.lastIndexOf('}');
+      if (start !== -1 && end !== -1) {
+          const cleanJson = aiResponse.substring(start, end + 1);
+          setResult(JSON.parse(cleanJson));
       } else {
-        // Fallback to hash-based selection
-        const imageHash = image ? image.length : 0;
-        index = imageHash % outcomes.length;
+        throw new Error("Invalid AI Response format");
       }
-      
-      setResult(outcomes[index]);
-    }, 2500);
+
+    } catch (error) {
+      console.error("Derm Scan failed:", error);
+      // Fallback for demo/error handling (optional, but good for robustness)
+       setResult({
+        risk: 'Unknown',
+        label: 'Analysis Failed',
+        confidence: 0,
+        desc: 'Could not complete analysis. Please try again or consult a doctor.'
+      });
+    } finally {
+      setIsScanning(false);
+    }
   };
 
   return (
