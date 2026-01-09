@@ -1,6 +1,6 @@
-# LifeGuard AI - Personal Health Companion
+# Serene AI - Personal Health Companion
 
-LifeGuard AI is a comprehensive, AI-powered health management platform designed to empower users to take control of their well-being. It combines advanced computer vision, acoustic analysis, and generative AI to provide real-time health insights, medication management, and symptom analysis.
+Serene AI is a comprehensive, AI-powered health management platform designed to empower users to take control of their well-being. It combines advanced computer vision, acoustic analysis, and generative AI to provide real-time health insights, medication management, and symptom analysis.
 
 ## 🚀 Features
 
